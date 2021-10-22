@@ -2,6 +2,7 @@
 /**variable index.html
  * 
 */
+//test gitkraken
 const sectionItems = document.querySelector("#items");
 const images = document.querySelector("#items > a > article > img");
 const productName = document.querySelector(".productName");
