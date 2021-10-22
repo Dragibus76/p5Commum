@@ -6,47 +6,45 @@ const idDescription = document.querySelector("#description"); //description
 const idColors = document.querySelector("#colors"); //select colors name color-select
 const idQuantity = document.querySelector("#quantity"); //input quantity
 const idAddToCart = document.querySelector("#addToCart"); //button add to cart typt number
-//end container article
-console.log(item);
-console.log(itemImg);
-console.log(idTitle);
-console.log(idPrice);
-console.log(idDescription);
-console.log(idColors);
-console.log(idQuantity);
-console.log(idAddToCart);
-//recup de l'url de la page chargéé
-console.log(window.location.href);
-console.log(window.location);
-//list product in tab productsListe
-var newUrl = new URL(location.href).searchParams.get("id");
-console.log(newUrl);
-let productsListeArticles = [];
-const fetchPoductArticles = async () => {
 
+/**product in tab productsListArticles
+ * for one article
+ * recupération URL in fectchProctuctArticles
+ * watch API in promesse
+*/
+
+let productsListArticles = [];
+const fetchProductArticles = async () => {
+    const newUrl = new URL(location.href).searchParams.get("id");
+    console.log(newUrl);
     await fetch(`http://localhost:3000/api/products/${newUrl}`)
         .then((res) => res.json())
         .then((data) => {
-            productsListeArticles = data;
-            console.log(productsListeArticles);
+            productsListArticles = data;
+            console.log(productsListArticles);
         })
         .catch((error) => {
             alert("Merci de recharger la page, une erreur est survenue !");
         });
 };
-
-//affichage des elements
-/*var newImg = document.createElement("img");*/
+ 
+/**
+ * display in product.html article unity with image
+ */
 const productDisplayArticles = async () => {
-    console.log("yes");
-    await fetchPoductArticles();
-    console.log(productsListeArticles.description );
-    console.log(productsListeArticles.name);
-    console.log(productsListeArticles.price);
-                   /*  itemImg. `<img src="${list.imageUrl}" alt="${list.altTxt}" width="160" height="160"></img> `;*/
-                     idTitle.textContent = ` ${productsListeArticles.name} `;
-                     idPrice.textContent = ` ${productsListeArticles.price} `;
-                     idDescription.textContent = ` ${productsListeArticles.description} `;
+         //call function (url and promesse)
+    await fetchProductArticles();
+         //Create element image
+            let displayImg = document.createElement("IMG");
+            displayImg.setAttribute("src",`${productsListArticles.imageUrl}`);
+            displayImg.setAttribute("alt", `${productsListArticles.altTxt}`);
+
+         //display element in product.html 
+                     itemImg.appendChild(displayImg);
+                     idTitle.textContent = ` ${productsListArticles.name} `;
+                     idPrice.textContent = ` ${productsListArticles.price} `;
+                     idDescription.textContent = ` ${productsListArticles.description} `;
+                     console.log(itemImg);
 };
 productDisplayArticles();
 
