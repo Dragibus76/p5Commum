@@ -2,7 +2,7 @@
 /**variable index.html
  * 
 */
-//test 2
+//test alex
 const sectionItems = document.querySelector("#items");
 const images = document.querySelector("#items > a > article > img");
 const productName = document.querySelector(".productName");
