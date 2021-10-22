@@ -27,7 +27,7 @@ const fetchPoduct =  async () => {
 //Display elements
 const productDisplay = async () => {
     await fetchPoduct()
-    sectionItems.innerHTML = productsListe.map((list)=>  
+    sectionItems.innerHTML = productsList.map((list)=>  
               `  
                  <a href="/front/html/product.html?id=${list._id}">
                     <article>
