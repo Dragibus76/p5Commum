@@ -1,56 +1,32 @@
+// Get informations from API
+async function getItems() {
+	try {
+		let response = await fetch("http://localhost:3000/api/products");
+		return await response.json();
+	} catch (error) {
+		console.log("Erreur : " + error);
+	}
+}
 
-/**variable index.html
- * 
-*/
-const sectionItems = document.querySelector("#items");
-const images = document.querySelector("#items > a > article > img");
-const productName = document.querySelector(".productName");
-const productDescription = document.querySelector(".productDescription");
+// Function of the render on Html
+async function renderItems() {
+	let items = await getItems();
+	let htmlRender = "";
+	items.forEach((item) => {
+		let htmlContent = `
+		<a href="./product.html?id=${item._id}">
+			<article>
+				<img src="${item.imageUrl}" alt="${item.altTxt}">
+				<h3 class="productName">${item.name}</h3>
+				<p class="productDescription">${item.description}</p>
+			</article>
+		</a>
+		`;
+		htmlRender += htmlContent;
+	});
+	let itemContainer = document.getElementById("items");
+	itemContainer.innerHTML += htmlRender;
+}
 
-
-/**
- * Api
- *  
- */
-//list product in tab productsListe
-let productsListe =[];
-
-const fetchPoduct =  async () => {
- await fetch("http://localhost:3000/api/products")
-    .then((res)=>res.json())
-    .then((data)=> {
-       productsListe = data;
-    console.log(productsListe);
-    })
-    .catch((error)=>{
-        alert("Merci de recharger la page, une erreur est survenue !");
-    })
-};
-//affichage des elements
-const productDisplay = async () => {
-    await fetchPoduct();
-
-
-    sectionItems.innerHTML = productsListe.map((list)=>  
-              `  
-                 <a href="/front/html/product.html?id=${list._id}">
-                    <article>
-                        <img src="${list.imageUrl}" alt="${list.altTxt}" width="160" height="160">
-                        <h3 class="productName">${list.name}</h3>
-                        <p class="productDescription">${list.description}</p>
-                    </article>
-                </a>
-              `
-
-    ).join("");
-};
-
-productDisplay();   
-/* pour memoire <img src="${list.imageUrl}" alt="${list.altTxt}">ligne a remettre dans les articles*/
-/* pour memoire <img src="${"/back/images/kanap01.jpeg"}" alt="Lorem ipsum dolor sit amet, Kanap name1" width="160" height="160">
-*/ 
-
-
-
-
-
+// Calling the function
+renderItems();
