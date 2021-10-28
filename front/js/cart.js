@@ -122,7 +122,7 @@ function itemQuantityRefresh() {
 			let localStorageKey = [itemId, itemColor];
 			let itemQuantity = e.target.value;
 			if (itemQuantity == 0) {
-				alert("Il faut au moins ajouter un Kanap 🛋️");
+				alert("Il faut au moins ajouter un Kanap");
 			}
 			localStorage.setItem(localStorageKey, itemQuantity);
 
@@ -181,7 +181,7 @@ function userInputVerification() {
 	function cityValid() {
 		const userCity = userForm.city;
 		const cityErrorMsg = document.getElementById("cityErrorMsg");
-		if (/^[A-Za-z]{2,20}$/.test(userCity)) {
+		if (/^(.){4,128}$/.test(userCity)) {
 			cityErrorMsg.innerText = "";
 			return true;
 		} else {
